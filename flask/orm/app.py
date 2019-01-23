@@ -26,8 +26,10 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.id}: {self.username}, {self.email}>'
         
+        
+        
 # 정리
-# Create
+# [CREATE]
 # INSERT INTO users (username, email) VALUES('blossomwill', 'tjastn10@gmail.com')
 # user = User(username='blossomwill', email='tjastn10@gmail.com')
 # db.session.add(user)
@@ -61,3 +63,16 @@ class User(db.Model):
 
 # ORDER LIMIT + OFFSET
 # users = User.query.order_by(User.username).limit(1).offset(2).all()
+
+
+# [DELETE]
+# DELETE FROM users WHERE id=1;
+# user = User.query.get(1)
+# db.session.delete(user)
+# db.ssssion.commit()
+
+# [UPDATE]
+# UPDATA users SET username='minsu' WHERE id=2;
+# user = User.query.get(2)
+# user.username = 'minsu'
+# db.session.commit()
