@@ -1,4 +1,4 @@
-"""intro URL Configuration
+"""ws URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -18,14 +18,9 @@ from django.urls import path
 from pages import views
 
 urlpatterns = [
-    path('bootstrap/', views.bootstrap),
-    path('naver/', views.naver), 
     path('catch/', views.catch),
     path('throw/', views.throw),
-    path('info/<str:phonenum>/', views.info),
-    path('lotto/', views.lotto),
-    path('hello/<str:name>/', views.hello),
-    path('dinner/', views.dinner),
-    path('index/', views.index),
+    path('student/<str:name>/', views.student),
+    path('info/', views.info),
     path('admin/', admin.site.urls),
 ]
