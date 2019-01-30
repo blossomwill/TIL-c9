@@ -16,6 +16,7 @@ def create(request):
     age = request.POST.get('age')
     student = Student(name=name, email=email, birthday=birthday, age=age)
     student.save()
+    # 뭔가를 보여주는게 아니기 때문에 redirect로 다른곳으로 돌려준다.
     return redirect(f'/students/{student.pk}/')
     
 def detail(request, student_id):
