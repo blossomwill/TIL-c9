@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+{% block container%}
+<h2>인덱스 페이지</h2>
+<a href="{% url 'pages:new' %}">New</a>
+<ul>
+    {% for post in posts%}
+    <li><a href="{% url 'pages:detail' post.pk %}">{{post.title}}</a></li>
+    {% endfor%}
+    </ul>
+{% endblock%}

@@ -1,0 +1,7 @@
+{% extends 'base.html'%}
+{% block container%}
+<h1>Detail Page</h1>
+<h2>{{posta.title}}</h2>
+<p>{{posta.content}}</p>
+<a href="{%url 'pages:list' %}">index</a>
+{% endblock%}
