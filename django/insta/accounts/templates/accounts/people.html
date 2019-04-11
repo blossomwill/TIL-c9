@@ -2,13 +2,13 @@
 
 {% block container %}
 <div class="container">
-    <h1>Post List</h1>
+    <h1>{{ people.username }}</h1>    
     <div class="row">
-        {% for post in posts %}
+        {% for post in people.post_set.all %}
         <div class="col-4">
-        {% include 'posts/_post.html' %}
+            <img src="{{ post.image.url }}" class="img-fluid"/>
         </div>
         {% endfor %}
     </div>
-<div class="container">
+</div>
 {% endblock %}
