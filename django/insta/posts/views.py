@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, ImageFormSet
 from .models import Post, Comment
+from django.db import transaction
 # Create your views here.
 
 def list(request):
@@ -13,30 +14,46 @@ def list(request):
 @login_required
 def create(request):
     if request.method == "POST":
-        post_form = PostForm(data=request.POST, files=request.FILES)
-        if post_form.is_valid():
+        post_form = PostForm(request.POST)
+        image_formset = ImageFormSet(request.POST, request.FILES)
+        if post_form.is_valid() and image_formset.is_valid():
             post = post_form.save(commit=False)
             post.user = request.user
-            post.save() # 실제 데이터베이스에 저장
+            
+            with transaction.atomic():
+                # 첫번째
+                post.save() # 실제 데이터베이스에 저장
+                # 두번째
+                image_formset.instance = post 
+                # .instance는  ImageFormSet(Post, Image, .., ..)에서 첫번째 인자를 말한다.
+                # .instance에 post가 들어간다
+                # 그래서 이 상황에서는 .Post와 같다
+                image_formset.save() # 실제 데이터베이스에 저장
+            
             return redirect('posts:list')
     else:
         post_form = PostForm()
-    return render(request, 'posts/form.html', {'post_form':post_form})
-
+        image_formset = ImageFormSet()
+        
+    return render(request, 'posts/form.html', {'post_form':post_form, 'image_formset': image_formset})
 
 @login_required  
 def update(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if post.user != request.user:
         return redirect('posts:list')
+        
     if request.method == 'POST':
-        post_form = PostForm(request.POST, request.FILES, instance=post)
-        if post_form.is_valid():
+        post_form = PostForm(request.POST, instance=post)
+        image_formset = ImageFormSet(request.POST, request.FILES, instance=post) # 이 post에 달린 image를 수정
+        if post_form.is_valid() and image_formset.is_valid():
             post_form.save()
+            image_formset.save()
             return redirect('posts:list')
     else:
         post_form = PostForm(instance=post)
-        return render(request, 'posts/form.html', {'post_form':post_form})
+        image_formset = ImageFormSet(instance=post)
+        return render(request, 'posts/form.html', {'post_form': post_form, 'image_formset': image_formset})
     
 @login_required     
 def delete(request, post_id):
