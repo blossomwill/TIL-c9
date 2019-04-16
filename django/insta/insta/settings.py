@@ -126,3 +126,6 @@ STATIC_URL = '/static/'
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# AUTH_USER_MODEL을 사용할때 app 이름, 그 안에있는 User라는 class로 정의된 모델을 쓰겠다.
+AUTH_USER_MODEL = 'accounts.User' 

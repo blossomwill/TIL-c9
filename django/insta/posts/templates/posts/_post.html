@@ -1,5 +1,8 @@
 <div class="card mb-4" style="width: 18rem;">
   <div class="card_header">
+    {% if post.user.profile.image %}
+    <img src="{{post.user.profile.image.url }}" width="25" alt="{{ post.user.profile.image}}">
+    {% endif %}
     <a href="{% url 'people' post.user.username %}">{{ post.user.username }}</a>
   </div>
   

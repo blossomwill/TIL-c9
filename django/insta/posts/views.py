@@ -4,10 +4,24 @@ from django.views.decorators.http import require_POST, require_http_methods
 from .forms import PostForm, CommentForm, ImageFormSet
 from .models import Post, Comment
 from django.db import transaction
+from itertools import chain
 # Create your views here.
 
-def list(request):
+def explore(request):
     posts = Post.objects.order_by('-id').all()
+    comment_form = CommentForm()
+    return render(request, 'posts/list.html', {'posts': posts, 'comment_form': comment_form})
+    
+
+@login_required
+def list(request):
+    #posts = Post.objects.order_by('-id').all()
+    # 1. 내가 follow하고 있는 사람들의 리스트
+    followings = request.user.followings.all()
+    # 2. followings 변수와 나를 묶음
+    followings = chain(followings, [request.user])
+    # 2. 이 사람들이 작성한 Post들만 뽑아옴.
+    posts = Post.objects.filter(user__in=followings).order_by('-id')
     comment_form = CommentForm()
     return render(request, 'posts/list.html', {'posts': posts, 'comment_form': comment_form})
     
