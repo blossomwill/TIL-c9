@@ -20,3 +20,6 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content',]
+        
+# OerationalError at [URL]
+# no such column: movies_score.movie_id # 실제 데이터 베이스에 없어서 생긴문제
