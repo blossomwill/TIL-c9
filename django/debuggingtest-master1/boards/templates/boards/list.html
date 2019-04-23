@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>INDEX</h1>
+    <hr>
+    <div class="boards">
+        {% for board in boards %}
+        <p><h3> {{board.title}} </h3> {{board.content}}</p>
+        {% endfor %}
+    </div>
+{% endblock %}
