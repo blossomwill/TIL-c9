@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block container %}
+
+<h1>User Delete</h1>
+{% if user.is_authenticated %}
+<form method="POST">
+    {% csrf_token %}
+    <p>정말로 탈퇴하시겠습니까?</p>
+    <input type="submit" value="Submit"/>
+</form>
+{% endif %}
+{% endblock %}

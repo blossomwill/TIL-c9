@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <h1>
+                {% if people.profile.image %}
+                <img src="{{ people.profile.image.url }}" width="50" alt="{{ people.profile.image}}">
+                {% endif %}
+                {{ people.username }}
+            </h1>
+        </div>
+        <div class="col-9">
+            <div>
+                <strong>{{ people.profile.nickname }}</strong>
+                {% if user != people%}
+                    {% if user in people.followers.all %}
+                    <a href="{% url 'accounts:follow' people.id %}">Unfollow</a>
+                    {% else %}
+                    <a href="{% url 'accounts:follow' people.id %}">Follow</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div>
+                <strong>Followers:</strong> {{ people.followers.count }}
+                <strong>Followings:</strong> {{ people.followings.count }}
+            </div>
+            <div>
+                {{ people.profile.introduction }}
+            </div>
+        </div>
+    </div>
+    
+    
+    {% if user == people %}
+    <div>
+        <p><a href="{% url 'accounts:profile_update' %}">프로필 수정</a></p>
+        <a href="{% url 'accounts:update' %}">계정 정보 수정</a>
+    </div>
+    {% endif %}
+    <div class="row">
+        {% for post in people.post_set.all %}
+        <div class="col-4">
+            <img src="{{ post.image_set.first.file.url }}" class="img-fluid"/>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

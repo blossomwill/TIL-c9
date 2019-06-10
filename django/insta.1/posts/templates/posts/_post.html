@@ -25,7 +25,6 @@
   </div>
   
   
-  
   <div class="card-body">
     
   <i class="{% if user in post.like_users.all %}fas {% else %} far {% endif %} fa-heart like-button" data-id="{{ post.id }}"></i>
@@ -34,13 +33,10 @@
       <span id="like-count-{{ post.id }}">{{ post.like_users.count }}</span>명이 좋아합니다.
     </p>
   </div>
-  <button type="button" class="btn btn-primary" >
-      Launch demo modal
-      </button>
   <div class="card-body">
     <p class="card-text">{{ post.content }}</p>
     {% if post.user == user %}
-    <a href="{% url 'posts:update' post.id %}" class='btn btn-info' >update</a>
+    <a href="{% url 'posts:update' post.id %}" class='btn btn-info'>update</a>
     <a href="{% url 'posts:delete' post.id %}" class='btn btn-danger'>delete</a>
     {% endif %}
   </div>
@@ -50,7 +46,6 @@
     <div class="card-text">
       <strong>{{ comment.user.username }}</strong> {{ comment.content }}
       {% if comment.user == user %}
-      
       <a href="{% url 'posts:comment_delete' post.id comment.id %}">삭제</a>
       {% endif%}
     </div>
@@ -58,7 +53,6 @@
       <!--<div class="card-text">댓글이 없습니다.</div>-->
     {% endfor %}
   </div>
-  
   
   {% if user.is_authenticated %}
   <form action="{% url 'posts:comment_create' post.id %}" method="POST" class="comment-form">

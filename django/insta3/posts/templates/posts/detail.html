@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<h1>Post Detail</h1>
+<h3>
+    {{ post.content }}
+</h3>
+<div>
+{% if user in post.like_users.all %}
+<a href="{% url 'posts:like' post.id %}">좋아요 취소</a>
+{% else %}
+<a href="{% url 'posts:like' post.id %}">좋아요</a>
+{% endif %}
+</div>
+<a href="{% url 'posts:update' post.id %}">수정</a>
+<br>
+<a href="{% url 'posts:delete' post.id %}">삭제</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block container %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ user_change_form }}
+    <input type="submit" value="Submit"/>
+</form>
+
+<h3>User Delete</h3>
+<a href="{% url 'accounts:delete' %}">회원탈퇴하기</a>
+
+{% endblock %}

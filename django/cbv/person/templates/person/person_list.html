@@ -1,0 +1,11 @@
+{% extends 'base.html' %} 
+
+{% block container %}
+    <h1>Person List</h1>
+    <a href="{% url 'person:create' %}">New Person</a>
+{% for p in person %}
+    <li>
+        {{p.last_name}} - {{p.email}} - {{ p.age }}
+    </li>
+{% endfor %}
+{% endblock %}

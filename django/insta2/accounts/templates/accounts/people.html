@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block container %}
+
+<h1> {{ people.username }}</h1>
+<div>
+{% if user != people %}
+    {% if user in people.follower.all %}
+    <a href="{% url 'accounts:follow' people.id %}">Unfollow</a>
+    {% else %}
+    <a href="{% url 'accounts:follow' people.id %}">Follow</a>
+    {% endif %}
+{% endif %}
+</div>
+<div>
+    <strong>Followers:</strong> {{ people.followers.count }}
+    <strong>Followings:</strong> {{ people.followings.count }}
+</div>
+{% if user == people %}
+<div>
+    <a href="{% url 'accounts:update' %}">계정정보 수정</a>
+</div>
+{% endif %}
+{% for post in people.post_set.all %}
+    {{ post.content }}
+{% endfor %}
+{% endblock %}
